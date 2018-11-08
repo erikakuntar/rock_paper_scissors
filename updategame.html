@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>rock-paper-scissors</title>
+</head>
+<body>
+  <h1>Play Rock Paper Scissors:Best out of 5 points.</h1>
+  <div>
+    <button value="Rock" id="Rock-btn">Rock</button>
+    <button value="Paper" id="paper-btn">Paper</button>
+    <button value="Scissors" id="Scissors=btn">Scissors</button>
+  </div>
+  <div class="scores">
+    <h5 id="cpuChoiceLog"></h5>
+    <h5 id="log"></h5>
+    <h3 id="result"></h3>
+    <h4 id="computerScore"></h4>
+    <h4 id="playerScore"></h4>
+  </div>
+
+<script type="text/javascript">
+let playerScore = 0
+let computerScore = 0
+let score = document.querySelector('#result');
+let cpu = document.querySelector('#computerScore');
+let plyr = document.querySelector('#playerScore');
+let log = document.querySelector('#log');
+let cpuChoiceLog = document.querySelector('#cpuChoiceLog')
+
+
+function computerPlay() {
+  let choices = ['Rock', 'Paper', 'Scissors'];
+  let computerChoice =
+    choices[Math.floor(Math.random() * choices.length)];
+  return computerChoice;
+}
+
+function playRound(playerSelection, computerSelection) {
+    cpuChoiceLog.textContent = ("computer Choice:" + computerSelection)
+  if (playerSelection == computerSelection) {
+    log.textContent = "It was a draw, you both picked the same weapon!";
+
+  } else if (playerSelection == 'Rock') {
+      if (computerSelection == 'Scissors') {
+        log.textContent = 'You are the winner! Rock smashes the Scissors!';
+        playerScore++;
+      } else {
+        log.textContent = 'You lose! Rock is covered by the paper.';
+        computerScore++;
+      }
+    } else if (playerSelection == 'Paper') {
+      if (computerSelection == 'Rock'){
+        log.textContent = 'You win! Paper coveres rock!';
+        playerScore++;
+      } else {
+        log.textContent = 'You lose, Scissors cuts the paper.';
+        computerScore++;
+      }
+    } else if (playerSelection == 'Scissors') {
+      if (computerSelection == 'Rock') {
+        log.textContent = 'You lose! Rock smashes scissors.';
+        computerScore++;
+      } else if (computerSelection == 'Paper') {
+        log.textContent = 'You win! Scissors cuts paper!';
+        playerScore++;
+      }
+    }
+    else {
+      alert('ERROR')
+    }
+}
+
+
+function game() {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const computerSelection = computerPlay();
+      score.textContent = playRound(button.value, computerSelection);
+      plyr.textContent = "Player Score: " + playerScore;
+      cpu.textContent = "Computer Score: " + computerScore;
+      if (playerScore == 5) {
+        score.textContent = "player Wins!";
+        computerScore = 0;
+        playerScore = 0;
+      }
+      if (computerScore == 5) {
+        score.textContent = "Computer Wins!";
+        computerScore = 0;
+        playerScore = 0;
+      }
+    })
+  })
+}
+
+game();
+
+</script>
+</body>
+</html>
